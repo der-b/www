@@ -19,7 +19,7 @@ sudo pacman -S ruby
 The following command will install [Jekyll](https://jekyllrb.com/) in your user directory (*~/.gem/ruby/*).
 
 ``` bash
-gem install jekyll bundler
+gem install --user-install jekyll bundler
 ```
 
 You probably want to add the ruby bin folder to your search path by adding following line to your "run commands" file of choice. (*~/.bashrc*, *~/.zshrc*, ...).
@@ -27,6 +27,7 @@ You probably want to add the ruby bin folder to your search path by adding follo
 ``` bash
 export PATH=$PATH:~/.gem/ruby/2.5.0/bin
 ```
+Adapt the version of ruby accordingly to your installed version.
 
 ## Create a new Website
 
@@ -94,3 +95,7 @@ pygmentize -S vim -f html > syntax.css
 ```
 
 Alternatively you can download the [css files](https://github.com/richleland/pygments-css).
+
+### Automatic Deployment using Git
+For automatic deployment create a git remote the target machine.
+
