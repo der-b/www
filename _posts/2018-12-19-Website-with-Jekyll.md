@@ -97,5 +97,26 @@ pygmentize -S vim -f html > syntax.css
 Alternatively you can download the [css files](https://github.com/richleland/pygments-css).
 
 ### Automatic Deployment using Git
-For automatic deployment create a git remote the target machine.
-change2
+The idea is, that a *git push* to a remote automaticly deploys the website to the http server. [Git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) will be used, which allows to execute custom skripts on events. I use the *post-receive* hook which is executed after a push to the remote.
+Therefore i create a git remote on the http server and cloned it in a differen directory. Similar to the following:
+
+```bash
+cd /path/to/local/repository/
+git clone /path/to/your/remote/
+``` 
+I created the file */path/to/your/remote/hooks/post-receive* with following content:
+
+```bash
+#!/bin/bash
+LOCAL=/path/to/local/repository/
+DEPLOY_DIR=/path/to/deploy/directory/
+
+export PATH=$PATH:~/.gem/ruby/2.5.0/bin
+
+unset GIT_DIR
+git -C ${LOCAL} fetch
+git -C ${LOCAL} pull
+jekyll build -s ${LOCAL} -d ${DEPLOY_DIR}
+```
+
+This script will update the the local reporitory in */path/to/local/repository/* and afterwards updates the website in */path/to/deploy/directory/*.
