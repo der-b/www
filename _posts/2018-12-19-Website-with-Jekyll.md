@@ -38,7 +38,7 @@ jekyll new <path_to_project_folder>
 ```
 This has the advantage that jekyll will create a base directory structure and most importand create some config files for you.
 
-Unfortunately this call fails on my system, because Jekyll tries to install some additional ruby gems and complains about missing super user rights. I decided not to install on the system level, therefore I had to install the missing gems by hand:
+Unfortunately this call fails on my system, because Jekyll tries to install some additional ruby gems and complains about missing super user rights. I decided to install in the user directory and not on the system level, therefore I installed the missing gems by hand:
 
 ``` bash
 gem install minima jekyll-feed
