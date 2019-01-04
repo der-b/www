@@ -2,7 +2,7 @@
 layout: post
 title: Website with Jekyll
 ---
-This website is genereted using Jekyll. The [Step-By-Step-How-Two](https://jekyllrb.com/docs/step-by-step/01-setup/) is great but I missed some informations which I documented here.
+This website is genereted using Jekyll. The [Step-By-Step-How-Two](https://jekyllrb.com/docs/step-by-step/01-setup/) is great but I missed some information which I documented here.
 
 ## Preperation
 
@@ -97,26 +97,34 @@ pygmentize -S vim -f html > syntax.css
 Alternatively you can download the [css files](https://github.com/richleland/pygments-css).
 
 ### Automatic Deployment using Git
-The idea is, that a *git push* to a remote automaticly deploys the website to the http server. [Git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) will be used, which allows to execute custom skripts on events. I use the *post-receive* hook which is executed after a push to the remote.
-Therefore i create a git remote on the http server and cloned it in a differen directory. Similar to the following:
-
+The idea is, that a *git push* to a remote automaticly deploys the website to the http server. [Git hooks](https://git-scm.com/book/en/v2/Customizing-Git-Git-Hooks) allows to execute custom skripts on events. I use the *post-receive* hook which is executed after a push to the remote.
+Therefore i create a non-bare git repository on the webserver.
 ```bash
 cd /path/to/local/repository/
-git clone /path/to/your/remote/
+git init
 ``` 
-I created the file */path/to/your/remote/hooks/post-receive* with following content:
+To prevent inconsistencies, by default, it is not allowed to push commits to a non-bare repository, because a push only updates the git index and not the checked out files. Since I don't intent to develop within this repository, the checked out reposetories shall be automatically synced with updated index. 
 
+To allow pushing to this non-bare remote, follwing lines have to be added to */path/to/local/repository/.git/config*:
+```
+[receive]
+	denyCurrentBranch = ignore
+```
+The *post-receive* hook is created by creating the the a file */path/to/local/repository/.git/hooks/post-receive* and make it executable.
+```bash
+chmod u+x /path/to/local/repository/.git/hooks/post-receive
+```
+My hook has following content:
 ```bash
 #!/bin/bash
-LOCAL=/path/to/local/repository/
 DEPLOY_DIR=/path/to/deploy/directory/
 
 export PATH=$PATH:~/.gem/ruby/2.5.0/bin
 
-unset GIT_DIR
-git -C ${LOCAL} fetch
-git -C ${LOCAL} pull
-jekyll build -s ${LOCAL} -d ${DEPLOY_DIR}
+git reset --hard
+jekyll build -s ${GIT_DIR} -d ${DEPLOY_DIR}
 ```
+Git sets the environment valriable GIT_DIR befor executeing hooks. Therefore any git command will be executed on the current git repository.
+The checked out files will by synced with *git reset \-\-hard*. After that jekyll is called to update the website in */path/to/deploy/direcoty/*. Since jekyll is installed in the user directory, it is necessary to update the search path.
 
-This script will update the the local reporitory in */path/to/local/repository/* and afterwards updates the website in */path/to/deploy/directory/*.
+A *git push* to this repository will also update the website.
