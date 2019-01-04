@@ -117,14 +117,16 @@ chmod u+x /path/to/local/repository/.git/hooks/post-receive
 My hook has following content:
 ```bash
 #!/bin/bash
+unset GIT_DIR
 DEPLOY_DIR=/path/to/deploy/directory/
+LOCAL=/path/to/local/repository/
 
 export PATH=$PATH:~/.gem/ruby/2.5.0/bin
 
-git reset --hard
-jekyll build -s ${GIT_DIR} -d ${DEPLOY_DIR}
+git -C ${LOCAL} reset --hard
+jekyll build -s ${LOCAL} -d ${DEPLOY_DIR}
 ```
-Git sets the environment valriable GIT_DIR befor executeing hooks. Therefore any git command will be executed on the current git repository.
+Git sets the environment valriable GIT_DIR befor executeing hooks. This leads to a strange behavior of git, which i couldn't solve. Thereforefore i unset it first.
 The checked out files will by synced with *git reset \-\-hard*. After that jekyll is called to update the website in */path/to/deploy/direcoty/*. Since jekyll is installed in the user directory, it is necessary to update the search path.
 
 A *git push* to this repository will also update the website.
