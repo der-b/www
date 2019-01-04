@@ -126,7 +126,7 @@ export PATH=$PATH:~/.gem/ruby/2.5.0/bin
 git -C ${LOCAL} reset --hard
 jekyll build -s ${LOCAL} -d ${DEPLOY_DIR}
 ```
-Git sets the environment valriable GIT_DIR befor executeing hooks. This leads to a strange behavior of git, which i couldn't solve. Thereforefore i unset it first.
+Git sets the environment valriable GIT_DIR befor executeing hooks. This leads to a strange behavior of git, which i don't understand and couldn't solve. Thereforefore i unset it first.
 The checked out files will by synced with *git reset \-\-hard*. After that jekyll is called to update the website in */path/to/deploy/direcoty/*. Since jekyll is installed in the user directory, it is necessary to update the search path.
 
 A *git push* to this repository will also update the website.
