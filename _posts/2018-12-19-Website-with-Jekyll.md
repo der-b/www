@@ -38,7 +38,7 @@ jekyll new <path_to_project_folder>
 ```
 This has the advantage that jekyll will create a base directory structure and most importand create some config files for you.
 
-Unfortunately this call fails on my system, because Jekyll tries to install some additional ruby gems and complains about missing super user rights. I decided to install in the user directory and not on the system level, therefore I installed the missing gems by hand:
+Unfortunately this call fails on my system, because Jekyll tries to install some additional ruby gems and complains about missing super user rights. I decided to install it in the user directory and not on the system level. Therefore I installed the missing gems by hand:
 
 ``` bash
 gem install minima jekyll-feed
@@ -103,18 +103,19 @@ Therefore i create a non-bare git repository on the webserver.
 cd /path/to/local/repository/
 git init
 ``` 
-To prevent inconsistencies, by default, it is not allowed to push commits to a non-bare repository, because a push only updates the git index and not the checked out files. Since I don't intent to develop within this repository, the checked out reposetories shall be automatically synced with updated index. 
+To prevent inconsistencies, it is not allowed to push commits to a non-bare repository by default. A git push only updates the git index and not the checked out files. Since I don't intent to develop within this repository, the checked out files shall be automatically synced with updated index. 
 
 To allow pushing to this non-bare remote, follwing lines have to be added to */path/to/local/repository/.git/config*:
 ```
 [receive]
 	denyCurrentBranch = ignore
 ```
-The *post-receive* hook is created by creating the the a file */path/to/local/repository/.git/hooks/post-receive* and make it executable.
+The *post-receive* hook is created by creating the the a script-file */path/to/local/repository/.git/hooks/post-receive* and make it executable.
 ```bash
+touch /path/to/local/repository/.git/hooks/post-receive
 chmod u+x /path/to/local/repository/.git/hooks/post-receive
 ```
-My hook has following content:
+My hook skript has following content:
 ```bash
 #!/bin/bash
 unset GIT_DIR
@@ -126,7 +127,5 @@ export PATH=$PATH:~/.gem/ruby/2.5.0/bin
 git -C ${LOCAL} reset --hard
 jekyll build -s ${LOCAL} -d ${DEPLOY_DIR}
 ```
-Git sets the environment valriable GIT_DIR befor executeing hooks. This leads to a strange behavior of git, which i don't understand and couldn't solve. Thereforefore i unset it first.
-The checked out files will by synced with *git reset \-\-hard*. After that jekyll is called to update the website in */path/to/deploy/direcoty/*. Since jekyll is installed in the user directory, it is necessary to update the search path.
-
-A *git push* to this repository will also update the website.
+Git sets the environment valriable GIT_DIR before executeing hooks. This leads to a strange behavior of git, which i don't understand and couldn't fix. Thereforefore i unset it first.
+The checked out files will by synced with *git reset \-\-hard*. After that jekyll is called to update the website in */path/to/deploy/direcoty/*. Since jekyll is installed in the user directory, it is necessary to update the search path with *export ...*
