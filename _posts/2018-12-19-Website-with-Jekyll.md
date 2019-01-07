@@ -84,7 +84,15 @@ echo $HELLO;
 ```
 ~~~
 
-The default highlighter of Jekyll is [Rouge](http://rouge.jneen.net/) which is compatible with [Pygments](http://pygments.org/). Rouge enrich the code with additional HTML tags and corresponding CSS classes. [Pygmentize](http://pygments.org/docs/cmdline/) can be used to generate according CSS definitions.
+The default highlighter of Jekyll is [Rouge](http://rouge.jneen.net/) which is compatible with [Pygments](http://pygments.org/). Rouge enrich the code with additional HTML tags and corresponding CSS classes. Rouge is can be installed either with
+```bash
+sudo pacman -S ruby-rouge
+```
+or with
+```bash
+gem install rouge
+```
+[Pygmentize](http://pygments.org/docs/cmdline/) can be used to generate according CSS definitions.
 ```bash
 sudo pacman -S pygmentize
 ```
