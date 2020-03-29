@@ -105,6 +105,17 @@ div.content * {
 	height: min-content;
 }
 
+div.note {
+	background-color: #ccc;
+	padding: 0.5em;
+	border-radius: 0.2em;
+}
+
+div.note h5 {
+	font-size: 1.1em;
+	margin: 0;
+	margin-bottom: 0.1em;
+}
 
 
 footer {
@@ -133,6 +144,18 @@ div.post h1:first-of-type {
 	margin-bottom: 0;
 }
 
+div.post h1 {
+	clear: both;
+}
+
+div.post h2 {
+	clear: both;
+}
+
+div.post h3 {
+	clear: both;
+}
+
 div.post p {
 	margin-bottom: 0;
 }
@@ -142,6 +165,17 @@ div.post div.meta {
 	font-size: 0.9em;
 	margin: 0;
 	text-align: right;
+}
+
+div.post div.clear {
+	clear: both;
+}
+
+div.post img {
+	max-width: 100%;
+	float: right;
+        padding-bottom: 0.5em;
+        padding-left: 0.5em;
 }
 
 div.highlight {
