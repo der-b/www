@@ -185,7 +185,7 @@ The library is build with the following command:
 ```
 % cd /path/to/sim_xspice_test/
 % cd ./codemodel/
-% cc -I. -fPIC -I./clk/ --shared -o clk.cm /usr/share/ngspice/dlmain.c clk/cfunc.c clk/ifspec.c
+% cc -I. -fPIC -I./clk/ --shared -lm -lngspice -o clk.cm /usr/share/ngspice/dlmain.c clk/cfunc.c clk/ifspec.c
 ```
 
 ## Testing the code model
@@ -249,7 +249,7 @@ Used program versions:
 
 ```
 % ngspice --version
-ngspice compiled from ngspice revision 31
+ngspice compiled from ngspice revision 32
 Written originally by Berkeley University
 Currently maintained by the NGSpice Project
 
@@ -259,8 +259,8 @@ Copyright (C) 1999-2011,  The NGSpice Project
 
 ```
 % gcc --version
-gcc (Arch Linux 9.3.0-1) 9.3.0
-Copyright (C) 2019 Free Software Foundation, Inc.
+gcc (GCC) 10.1.0
+Copyright (C) 2020 Free Software Foundation, Inc.
 This is free software; see the source for copying conditions.  There is NO
 warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 ```
