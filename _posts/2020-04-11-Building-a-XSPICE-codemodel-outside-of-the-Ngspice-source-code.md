@@ -2,7 +2,7 @@
 layout: post
 title: "Building a XSPICE codemodel outside of the Ngspice source code"
 ---
-The [Ngspice manual](http://ngspice.sourceforge.net/docs/ngspice-31-manual.pdf) (PDF) describes how to build a XSPICE Codemodel within the source code of Ngspice.
+The [Ngspice manual](http://ngspice.sourceforge.net/docs/ngspice-32-manual.pdf) (PDF) describes how to build a XSPICE Codemodel within the source code of Ngspice.
 In this article I describe how to compile a codemodel only using the installed Ngspice version of your favorite Linux distribution.
 
 ## TL;DR
@@ -85,7 +85,7 @@ In this case, the codemodel has only one digital output which can only be connec
 
 The PARAMETER\_TABLE defines which parameter can be set by Ngspice.
 If the codemodel needs to keep information over consecutive calls to (*cm_clk*), than these variables have to be defined in the STATIC\_VAR\_TABLE.
-For more information see section 28.6 of [Ngspice manual](ngspice.sourceforge.net/docs/ngspice-31-manual.pdf) (PDF).
+For more information see section 28.6 of [Ngspice manual](ngspice.sourceforge.net/docs/ngspice-32-manual.pdf) (PDF).
 
 The interface specification have to be translated to a C-File *ifspec.c*, which needs to be compiled into the codemodel library.
 This is done by invoking the *cmpp* command:
@@ -153,7 +153,7 @@ Unfortunately, these macros are not C preprocessor macros and need a separate tr
 This creates a C-File *cfunc.c* which also needs to be compiled into the library.
 
 Please note, that the function name have to be the same, as the C\_Function\_Name specified in the interface description.
-For more details see section 28.7 in the [Ngspice manual](ngspice.sourceforge.net/docs/ngspice-31-manual.pdf) (PDF) or look into the codemodels predefined by ngspice like the [digital or](https://sourceforge.net/p/ngspice/ngspice/ci/master/tree/src/xspice/icm/digital/d_or/cfunc.mod).
+For more details see section 28.7 in the [Ngspice manual](ngspice.sourceforge.net/docs/ngspice-32-manual.pdf) (PDF) or look into the codemodels predefined by ngspice like the [digital or](https://sourceforge.net/p/ngspice/ngspice/ci/master/tree/src/xspice/icm/digital/d_or/cfunc.mod).
 
 ### Base Interface
 
@@ -167,7 +167,7 @@ clk
 ```
 
 The *udnpath.lst* has to be created, but is empty in our case, since we don't define a "User Defined Node".
-See Section 28.8 of the [Ngspice manual](ngspice.sourceforge.net/docs/ngspice-31-manual.pdf) (PDF) for more information.
+See Section 28.8 of the [Ngspice manual](ngspice.sourceforge.net/docs/ngspice-32-manual.pdf) (PDF) for more information.
 To generate the base interface, you need to execute the following commands:
 
 ```
